@@ -9,6 +9,44 @@ export default {
     mutations: {
         updateUsers(state, users) {
             state.users = users.results
+        },
+        filterUsersByLastName(state, query) {
+            const users = state.users
+
+            state.users = users.filter(user => user.name.last === query)
+        },
+        filterUsersByDob(state, query) {
+            const users = state.users
+
+            state.users = users.filter(user => user.dob.date === query)
+        },
+        sortUsersByLastName(state) {
+            const users = state.users
+
+            users.sort((a, b) => {
+                let compare = 0
+                if (a.name.last > b.name.last) {
+                    compare = 1
+                } else if (b.name.last > a.name.last) {
+                    compare = -1
+                }
+                return compare
+            })
+            state.users = users
+        },
+        sortUsersByDob(state) {
+            const users = state.users
+
+            users.sort((a, b) => {
+                let compare = 0
+                if (a.dob.date > b.dob.date) {
+                    compare = 1
+                } else if (b.dob.date > a.dob.date) {
+                    compare = -1
+                }
+                return compare
+            })
+            state.users = users
         }
     },
     state: {
@@ -21,24 +59,6 @@ export default {
     getters: {
         getUsers(state) {
             return state.users
-        },
-        filteredUsers(state) {
-            return state.users
-        },
-        sortedUsers(state) {
-            const users = [...state.users].sort((a, b) => {
-                if(a[state.sortBy] > b[state.sortBy]){
-                    return 1
-                }
-                if(a[state.sortBy] < b[state.sortBy]){
-                    return -1
-                }
-                return 0
-            })
-            if(!state.sortAsc){
-                users.reverse()
-            }
-            return users
-        },
+        }
     }
 }
