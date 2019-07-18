@@ -13,12 +13,12 @@ export default {
         filterUsersByLastName(state, query) {
             const users = state.users
 
-            state.users = users.filter(user => user.name.last === query)
+            state.users = users.filter(user => user.name.last.indexOf(query) !== -1)
         },
         filterUsersByDob(state, query) {
             const users = state.users
 
-            state.users = users.filter(user => user.dob.date === query)
+            state.users = users.filter(user => user.dob.date.indexOf(query) !== -1)
         },
         sortUsersByLastName(state) {
             const users = state.users
